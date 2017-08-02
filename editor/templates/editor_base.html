@@ -62,14 +62,8 @@
        $("#target-editor-twitter").markdown({
             savable:true,
             onChange: function(e){
-                if (typeof flask_pagedown_converter === "undefined")
-                    flask_pagedown_converter = Markdown.getSanitizingConverter().makeHtml;
-                var textarea = $("#target-editor-twitter");
-                var preview = $("#preview");
-                preview.innerHTML = flask_pagedown_converter(textarea.value); 
-                textarea.onkeyup.call(textarea);
-                console.log("Changed!")
                 
+                console.log("Changed!")
             }
         })
     </script>
