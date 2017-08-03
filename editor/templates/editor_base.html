@@ -37,8 +37,8 @@
                 {% block editor%}{% endblock editor%}
             </div>
             <div class="col-md-4">
-                <h3>priview</h3>
-                <div id="preview">
+                <h3>preview</h3>
+                <div id="preview"   style="width: 400" >
                     <p>$$\frac{-b\pm\sqrt{b^2-4ac}}{2a}$$</p>
                 </div>
             </div>
@@ -65,21 +65,32 @@
     <script src="static/js/to-markdown.js"></script>
     <script src="static/js/main.js"></script>
     <script type="text/javascript">
-       $(document).ready(function(){
-            $("div.md-controls").remove()
-            $("div.md-controls-fullscreen").remove()
+        $(document).ready(function(){            
+            $("div.md-controls").remove()            
             $("div.md-fullscreen-controls").remove()
-       })
-       $("#target-editor-twitter").markdown({
-            savable:true,
+            
+        })
+        $("#some-textarea").markdown(
+            {
+                autofocus: false,
+                savable: false,
+                resize: "both",
+                footer: "",
+                fullscreen:"",
+                
+            })
+        $("#target-editor-twitter").markdown({
+            onShow:function(e){
+                e.hideButtons("cmdPreview")
+            },
             onChange: function(e){
                 parsed_markdown = e.parseContent()
                 div_preview=document.getElementById("preview")
                 div_preview.innerHTML = parsed_markdown
                 MathJax.Hub.Typeset();
-                console.log(parsed_markdown)
-            }
-        })
+            }            
+        })            
+        
     </script>
    
   
