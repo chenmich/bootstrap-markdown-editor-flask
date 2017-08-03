@@ -1,9 +1,15 @@
 {% extends "bootstrap/base.html" %}
 {% import  "bootstrap/wtf.html" as wtf %}
 {% block head %}
-    {{super()}}
-   
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>        
+    {{super()}}   
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$','$'], ['\\(','\\)']],
+                processEscapes: true
+            }
+        });
+    </script>        
 {% endblock head %}
 {% block metas %}
     {{super()}}
@@ -27,10 +33,15 @@
 {% block content %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-8">
-                {% block editor %}{% endblock editor %}
+            <div class="col-md-8">
+                {% block editor%}{% endblock editor%}
             </div>
-            <div class="col-sm-4"></div>
+            <div class="col-md-4">
+                <h3>priview</h3>
+                <div id="preview">
+                    <p>$$\frac{-b\pm\sqrt{b^2-4ac}}{2a}$$</p>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock content %}
@@ -62,8 +73,11 @@
        $("#target-editor-twitter").markdown({
             savable:true,
             onChange: function(e){
-                
-                console.log("Changed!")
+                parsed_markdown = e.parseContent()
+                div_preview=document.getElementById("preview")
+                div_preview.innerHTML = parsed_markdown
+                MathJax.Hub.Typeset();
+                console.log(parsed_markdown)
             }
         })
     </script>
